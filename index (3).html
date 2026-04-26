@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Well Soon! 🌸</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Nunito:wght@400;600;800&display=swap');
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-color: #fdf2f8; 
+        }
+
+        .font-handwriting {
+            font-family: 'Caveat', cursive;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(10deg); }
+        }
+
+        @keyframes float-fast {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(-15deg); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(244, 114, 182, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(244, 114, 182, 0.8); }
+        }
+
+        @keyframes bokeh {
+            0% { transform: scale(1) translateY(0); opacity: 0.3; }
+            50% { transform: scale(1.2) translateY(-20px); opacity: 0.6; }
+            100% { transform: scale(1) translateY(0); opacity: 0.3; }
+        }
+
+        /* Animasi Kedip Mata */
+        @keyframes blinkY {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.1); }
+        }
+
+        /* Animasi Reaksi Klik */
+        @keyframes bear-bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1) translateY(-10px); }
+        }
+
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        .animate-float-slow { animation: float-slow 4s ease-in-out infinite; }
+        .animate-float-fast { animation: float-fast 2.5s ease-in-out infinite; }
+        .animate-giftbox { animation: float 3s ease-in-out infinite, pulse-glow 2s ease-in-out infinite; }
+        
+        .bear-eyes {
+            transform-origin: center;
+            animation: blinkY 4s infinite;
+        }
+
+        .bear-react {
+            animation: bear-bounce 0.4s ease-out;
+        }
+
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s step-start infinite;
+            color: #f472b6;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #fce7f3; }
+        ::-webkit-scrollbar-thumb { background: #f472b6; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ec4899; }
+
+        .hidden-content {
+            display: none;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="landing-page" class="fixed inset-0 z-50 flex items-center justify-center bg-pink-50 transition-all duration-1000 ease-in-out opacity-100 scale-100">
+        <div onclick="openGift()" class="animate-giftbox cursor-pointer bg-white p-8 md:p-12 rounded-3xl border-4 border-pink-200 flex flex-col items-center gap-6 group hover:scale-105 transition-transform duration-300">
+            <div class="text-8xl group-hover:rotate-12 transition-transform duration-300">
+                🎁
+            </div>
+            <p class="text-pink-500 font-bold text-xl md:text-2xl tracking-wider text-center">
+                Ada sesuatu buat kamu! <br/>
+                <span class="text-sm font-normal text-pink-400 mt-2 block">(Tap box-nya ya)</span>
+            </p>
+        </div>
+    </div>
+
+    <div id="main-content" class="hidden-content min-h-screen bg-gradient-to-br from-pink-100 via-rose-50 to-pink-100 flex flex-col items-center">
+        
+        <div class="fixed inset-0 pointer-events-none overflow-hidden">
+            <div class="absolute top-10 left-10 w-64 h-64 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-[bokeh_6s_infinite]"></div>
+            <div class="absolute top-40 right-10 w-72 h-72 bg-rose-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-[bokeh_8s_infinite_reverse]"></div>
+            <div class="absolute bottom-20 left-1/3 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-[bokeh_7s_infinite]"></div>
+        </div>
+
+        <div class="relative w-full max-w-4xl mx-auto pt-24 pb-16 px-4 flex flex-col items-center justify-center min-h-screen z-10">
+            
+            <h1 class="text-4xl md:text-6xl font-extrabold text-pink-600 mb-12 text-center drop-shadow-sm h-20">
+                <span id="typed-text" class="typing-cursor text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-400"></span>
+            </h1>
+
+            <div id="bear-container" onclick="reactBear()" class="relative w-64 h-64 md:w-80 md:h-80 flex items-center justify-center animate-float cursor-pointer">
+                <div id="decorations-container"></div>
+                
+                <svg viewBox="0 0 200 200" class="w-full h-full drop-shadow-2xl">
+                    <circle cx="55" cy="65" r="22" fill="#D4A373" />
+                    <circle cx="145" cy="65" r="22" fill="#D4A373" />
+                    <circle cx="55" cy="65" r="12" fill="#FAEDCB" />
+                    <circle cx="145" cy="65" r="12" fill="#FAEDCB" />
+                    
+                    <circle cx="100" cy="110" r="65" fill="#D4A373" />
+                    
+                    <ellipse cx="60" cy="115" rx="12" ry="8" fill="#FFB5A7" opacity="0.7"/>
+                    <ellipse cx="140" cy="115" rx="12" ry="8" fill="#FFB5A7" opacity="0.7"/>
+                    
+                    <g class="bear-eyes">
+                        <circle cx="75" cy="100" r="6" fill="#4A3F35" />
+                        <circle cx="125" cy="100" r="6" fill="#4A3F35" />
+                        <circle cx="73" cy="98" r="2" fill="#FFF" />
+                        <circle cx="123" cy="98" r="2" fill="#FFF" />
+                    </g>
+                    
+                    <ellipse cx="100" cy="125" rx="22" ry="18" fill="#FAEDCB" />
+                    <circle cx="100" cy="118" r="7" fill="#4A3F35" />
+                    <path d="M 100 125 Q 100 135 90 135 M 100 125 Q 100 135 110 135" stroke="#4A3F35" stroke-width="2.5" stroke-linecap="round" fill="none" />
+                    
+                    <g transform="rotate(25 120 70)">
+                        <rect x="110" y="65" width="28" height="12" rx="4" fill="#F8EDEB" stroke="#FCD5CE" stroke-width="1"/>
+                        <rect x="120" y="66" width="8" height="10" fill="#FCD5CE" />
+                    </g>
+                </svg>
+            </div>
+
+            <p class="mt-12 text-pink-500/80 font-medium text-lg text-center max-w-md">
+                Istirahat yang cukup, jangan lupa minum obat, dan makan yang bergizi ya!
+                <br/><span class="text-sm">(Scroll ke bawah yuk 👇)</span>
+            </p>
+        </div>
+
+        <div class="w-full bg-white/40 backdrop-blur-sm border-t border-white py-24 flex items-center justify-center z-10">
+            <div class="bg-white p-4 pb-12 rounded-sm shadow-2xl shadow-pink-200/60 transform rotate-3 w-80 max-w-[90%] mx-auto relative hover:rotate-0 hover:scale-105 transition-all duration-500 group">
+                <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 w-12 h-6 bg-rose-200/50 backdrop-blur-md rotate-[-2deg] shadow-sm z-20"></div>
+                
+                <div class="w-full aspect-[4/5] bg-pink-50 overflow-hidden relative pointer-events-none rounded">
+                    <video id="main-video" src="video.mp4" loop muted playsinline class="w-full h-full object-cover filter contrast-125 saturate-110"></video>
+                    <div class="absolute inset-0 bg-pink-300 mix-blend-overlay opacity-20"></div>
+                </div>
+
+                <p class="absolute bottom-3 left-0 right-0 text-center text-pink-600 font-handwriting text-2xl group-hover:text-pink-500 transition-colors">
+                    semoga cepat sembuh ya :)
+                </p>
+            </div>
+        </div>
+
+        <div class="w-full text-center py-6 text-pink-400 text-sm z-10">
+            Made with 💖 for a great friend
+        </div>
+    </div>
+
+    <script>
+        const fullText = "Get Well Soon! 🌸";
+        const decorations = [
+            { type: '💖', left: '10%', top: '20%', size: 'text-2xl', delay: '0s', anim: 'animate-float-slow' },
+            { type: '⭐', left: '80%', top: '15%', size: 'text-xl', delay: '1s', anim: 'animate-float-fast' },
+            { type: '✨', left: '25%', top: '70%', size: 'text-3xl', delay: '0.5s', anim: 'animate-float-slow' },
+            { type: '🌸', left: '75%', top: '65%', size: 'text-2xl', delay: '1.5s', anim: 'animate-float-fast' },
+            { type: '💖', left: '85%', top: '40%', size: 'text-xl', delay: '0.2s', anim: 'animate-float-slow' },
+            { type: '⭐', left: '15%', top: '45%', size: 'text-2xl', delay: '0.8s', anim: 'animate-float-fast' },
+        ];
+
+        function openGift() {
+            const landing = document.getElementById('landing-page');
+            const main = document.getElementById('main-content');
+            const video = document.getElementById('main-video');
+
+            landing.classList.add('opacity-0', 'pointer-events-none', 'scale-110');
+            
+            setTimeout(() => {
+                landing.style.display = 'none';
+                main.classList.remove('hidden-content');
+                
+                setTimeout(() => {
+                    main.style.opacity = '1';
+                    main.style.transition = 'opacity 1s ease-in';
+                    startTyping();
+                    video.play();
+                }, 100);
+            }, 1000);
+        }
+
+        function startTyping() {
+            const typingElement = document.getElementById('typed-text');
+            let currentLength = 0;
+            const timer = setInterval(() => {
+                typingElement.textContent = fullText.slice(0, currentLength + 1);
+                currentLength++;
+                if (currentLength >= fullText.length) {
+                    clearInterval(timer);
+                    typingElement.classList.remove('typing-cursor');
+                }
+            }, 150);
+        }
+
+        // Reaksi Beruang Saat Diklik
+        function reactBear() {
+            const bear = document.getElementById('bear-container');
+            const container = document.getElementById('decorations-container');
+            
+            // Tambahkan class animasi bounce
+            bear.classList.add('bear-react');
+            setTimeout(() => bear.classList.remove('bear-react'), 400);
+
+            // Munculkan emot hati kecil secara acak
+            const heart = document.createElement('div');
+            heart.textContent = '💖';
+            heart.className = 'absolute text-xl pointer-events-none animate-ping';
+            heart.style.left = (Math.random() * 80 + 10) + '%';
+            heart.style.top = (Math.random() * 50 + 10) + '%';
+            container.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 1000);
+        }
+
+        const container = document.getElementById('decorations-container');
+        decorations.forEach(dec => {
+            const div = document.createElement('div');
+            div.className = `absolute ${dec.size} ${dec.anim} cursor-default transition-all duration-300 hover:scale-125 hover:drop-shadow-[0_0_10px_rgba(244,114,182,0.8)]`;
+            div.style.left = dec.left;
+            div.style.top = dec.top;
+            div.style.animationDelay = dec.delay;
+            div.textContent = dec.type;
+            container.appendChild(div);
+        });
+    </script>
+</body>
+</html>
